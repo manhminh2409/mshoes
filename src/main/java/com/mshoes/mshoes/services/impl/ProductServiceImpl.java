@@ -4,9 +4,9 @@ import com.mshoes.mshoes.exception.ResourceNotFoundException;
 import com.mshoes.mshoes.libraries.Utilities;
 import com.mshoes.mshoes.mapper.ImageMapper;
 import com.mshoes.mshoes.mapper.ProductMapper;
-import com.mshoes.mshoes.models.DTO.ProductDTO;
-import com.mshoes.mshoes.models.DTO.RequestedImage;
-import com.mshoes.mshoes.models.DTO.RequestedProduct;
+import com.mshoes.mshoes.models.dtos.ProductDTO;
+import com.mshoes.mshoes.models.dtos.RequestedImage;
+import com.mshoes.mshoes.models.dtos.RequestedProduct;
 import com.mshoes.mshoes.models.Image;
 import com.mshoes.mshoes.models.Product;
 import com.mshoes.mshoes.repositories.ImageRepository;
@@ -52,6 +52,7 @@ public class ProductServiceImpl implements ProductService {
 		product.setCreatedDate(utilities.getCurrentDate());
 		product.setModifiedDate(utilities.getCurrentDate());
 
+		product.setVisited(0);
 		product.setStatus(1);
 
 		product.setImages(null);

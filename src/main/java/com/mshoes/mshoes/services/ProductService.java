@@ -1,7 +1,7 @@
 package com.mshoes.mshoes.services;
 
-import com.mshoes.mshoes.models.DTO.ProductDTO;
-import com.mshoes.mshoes.models.DTO.RequestedProduct;
+import com.mshoes.mshoes.models.dtos.ProductDTO;
+import com.mshoes.mshoes.models.dtos.RequestedProduct;
 
 import java.util.List;
 

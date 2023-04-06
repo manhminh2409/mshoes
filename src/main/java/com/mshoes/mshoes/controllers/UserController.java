@@ -1,7 +1,7 @@
 package com.mshoes.mshoes.controllers;
 
-import com.mshoes.mshoes.models.DTO.RequestedUser;
-import com.mshoes.mshoes.models.DTO.UserDTO;
+import com.mshoes.mshoes.models.dtos.RequestedUser;
+import com.mshoes.mshoes.models.dtos.UserDTO;
 import com.mshoes.mshoes.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,7 +41,8 @@ public class UserController {
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/update/{id}")
-	public ResponseEntity<UserDTO> updateUser(@PathVariable(name = "id") long userId, @RequestBody RequestedUser requestedUser) {
+	public ResponseEntity<UserDTO> updateUser(@PathVariable(name = "id") long userId,
+			@RequestBody RequestedUser requestedUser) {
 		UserDTO responseUser = userService.updateUser(requestedUser, userId);
 
 		return new ResponseEntity<>(responseUser, HttpStatus.OK);

@@ -1,4 +1,4 @@
-package com.mshoes.mshoes.models.DTO;
+package com.mshoes.mshoes.models.dtos;
 
 import com.mshoes.mshoes.models.*;
 import lombok.Data;
@@ -31,6 +31,5 @@ public class ProductDTO {
 	private List<ProductOption> productOptions;
 
 	private List<ProductVariant> productVariants;
-
 
 }

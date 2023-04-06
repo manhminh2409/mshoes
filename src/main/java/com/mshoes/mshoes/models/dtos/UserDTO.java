@@ -1,4 +1,4 @@
-package com.mshoes.mshoes.models.DTO;
+package com.mshoes.mshoes.models.dtos;
 
 import lombok.Data;
 
@@ -7,7 +7,7 @@ public class UserDTO {
 
 	private long id;
 
-	private String name;
+	private String username;
 
 	private String password;
 

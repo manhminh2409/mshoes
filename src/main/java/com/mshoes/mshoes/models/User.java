@@ -1,19 +1,19 @@
 package com.mshoes.mshoes.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 
-@Data
+
 @Entity
-@Table(name = "USER", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }),
+@Table(name = "USER", uniqueConstraints = { @UniqueConstraint(columnNames = { "username" }),
 		@UniqueConstraint(columnNames = { "email" }) })
 public class User {
 
@@ -22,7 +22,7 @@ public class User {
 	private long id;
 
 	@Column(nullable = false)
-	private String name;
+	private String username;
 
 	@Column(nullable = false)
 	private String password;
@@ -51,8 +51,8 @@ public class User {
 	@Column
 	private int status;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+	@ManyToMany(targetEntity = Role.class,fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)

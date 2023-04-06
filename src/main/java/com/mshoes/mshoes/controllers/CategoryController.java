@@ -1,6 +1,6 @@
 package com.mshoes.mshoes.controllers;
 
-import com.mshoes.mshoes.models.DTO.CategoryDTO;
+import com.mshoes.mshoes.models.dtos.CategoryDTO;
 import com.mshoes.mshoes.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +24,7 @@ public class CategoryController {
 
 	@GetMapping
 	public List<CategoryDTO> getAllCategory() {
-		return categoryService.getAllcategorys();
+		return categoryService.getAllCategories();
 	}
 
 	@GetMapping("/{id}")

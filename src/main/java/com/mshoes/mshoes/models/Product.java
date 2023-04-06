@@ -16,7 +16,6 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 
-
 @Entity
 @Table(name = "PRODUCT")
 public class Product {
@@ -47,17 +46,15 @@ public class Product {
 	@JoinColumn(name = "product_category_id")
 	private Category category;
 
-	@OneToMany(mappedBy = "product", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Image> images = new ArrayList<>();
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "product_author_id")
 	private User user;
 
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "product_options",
-			joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
-			inverseJoinColumns = @JoinColumn(name = "option_id", referencedColumnName = "id"))
+	@ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+	@JoinTable(name = "product_options", joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "option_id", referencedColumnName = "id"))
 	private Set<Option> options = new HashSet<>();
 
 	@OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL)

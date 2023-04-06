@@ -1,6 +1,6 @@
 package com.mshoes.mshoes.mapper;
 
-import com.mshoes.mshoes.models.DTO.RoleDTO;
+import com.mshoes.mshoes.models.dtos.RoleDTO;
 import com.mshoes.mshoes.models.Role;
 import org.mapstruct.Mapper;
 

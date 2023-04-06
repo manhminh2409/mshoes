@@ -1,7 +1,7 @@
 package com.mshoes.mshoes.services;
 
-import com.mshoes.mshoes.models.DTO.RequestedUser;
-import com.mshoes.mshoes.models.DTO.UserDTO;
+import com.mshoes.mshoes.models.dtos.RequestedUser;
+import com.mshoes.mshoes.models.dtos.UserDTO;
 
 import java.util.List;
 

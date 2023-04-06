@@ -1,7 +1,7 @@
 package com.mshoes.mshoes.mapper;
 
-import com.mshoes.mshoes.models.DTO.ProductDTO;
-import com.mshoes.mshoes.models.DTO.RequestedProduct;
+import com.mshoes.mshoes.models.dtos.ProductDTO;
+import com.mshoes.mshoes.models.dtos.RequestedProduct;
 import com.mshoes.mshoes.models.Image;
 import com.mshoes.mshoes.models.Product;
 import org.mapstruct.*;

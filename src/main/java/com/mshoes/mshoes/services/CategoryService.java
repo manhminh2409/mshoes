@@ -1,6 +1,6 @@
 package com.mshoes.mshoes.services;
 
-import com.mshoes.mshoes.models.DTO.CategoryDTO;
+import com.mshoes.mshoes.models.dtos.CategoryDTO;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public interface CategoryService {
 	 *
 	 * @return
 	 */
-	List<CategoryDTO> getAllcategorys();
+	List<CategoryDTO> getAllCategories();
 
 	/**
 	 * Method get category by categoryId. <br>
@@ -27,7 +27,7 @@ public interface CategoryService {
 	 * Method create new category <br>
 	 * <u><i>Update: 06/03/2023</i></u>
 	 *
-	 * @param CategoryDTO
+	 * @param categoryDTO
 	 * @return
 	 */
 	CategoryDTO createCategory(CategoryDTO categoryDTO);
@@ -36,7 +36,7 @@ public interface CategoryService {
 	 * Method update category with new information category and categoryId. <br>
 	 * <u><i>Update: 06/03/2023</i></u>
 	 *
-	 * @param CategoryDTO
+	 * @param categoryDTO
 	 * @param categoryId
 	 * @return
 	 */

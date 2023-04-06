@@ -4,7 +4,7 @@ import com.mshoes.mshoes.exception.ResourceNotFoundException;
 import com.mshoes.mshoes.libraries.Utilities;
 import com.mshoes.mshoes.mapper.CategoryMapper;
 import com.mshoes.mshoes.models.Category;
-import com.mshoes.mshoes.models.DTO.CategoryDTO;
+import com.mshoes.mshoes.models.dtos.CategoryDTO;
 import com.mshoes.mshoes.repositories.CategoryRepository;
 import com.mshoes.mshoes.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public List<CategoryDTO> getAllcategorys() {
+	public List<CategoryDTO> getAllCategories() {
 		// TODO Auto-generated method stub
 		List<Category> categories = categoryRepository.findAll();
 		return categoryMapper.mapModelToDTOs(categories);
