@@ -1,4 +1,4 @@
-package com.mshoes.mshoes.controllers.admin;
+package com.mshoes.mshoes.controllers;
 
 import com.mshoes.mshoes.models.dtos.RequestedLogin;
 import com.mshoes.mshoes.models.dtos.RequestedSignup;
