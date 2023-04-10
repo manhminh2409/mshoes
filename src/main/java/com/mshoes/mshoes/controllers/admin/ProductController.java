@@ -1,6 +1,5 @@
 package com.mshoes.mshoes.controllers.admin;
 
-import com.mshoes.mshoes.models.Product;
 import com.mshoes.mshoes.models.dtos.ProductDTO;
 import com.mshoes.mshoes.models.dtos.RequestedProduct;
 import com.mshoes.mshoes.services.ProductService;
@@ -10,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/products")

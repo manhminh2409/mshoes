@@ -1,11 +1,9 @@
 package com.mshoes.mshoes.services;
 
-import com.mshoes.mshoes.models.Product;
 import com.mshoes.mshoes.models.dtos.ProductDTO;
 import com.mshoes.mshoes.models.dtos.RequestedProduct;
 import org.springframework.data.domain.Page;
 
-import java.util.List;
 
 public interface ProductService {
 
@@ -13,7 +11,7 @@ public interface ProductService {
 	 * Method get all product is enable(product_status=1) in database <br>
 	 * <u><i>Update: 02/03/2023</i></u>
 	 *
-	 * @return
+	 * @return ProductDTO
 	 */
 	Page<ProductDTO> getAllProducts(int pageNumber, int pageSize, String sortBy);
 
@@ -22,7 +20,7 @@ public interface ProductService {
 	 * <br>
 	 * <u><i>Update: 06/03/2023</i></u>
 	 *
-	 * @return
+	 * @return ProductDTO
 	 */
 	Page<ProductDTO> getProductsByCategoryId(long categoryId, int pageNumber, int pageSize, String sortBy);
 
