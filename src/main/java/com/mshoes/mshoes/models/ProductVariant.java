@@ -26,7 +26,18 @@ public class ProductVariant {
 	private long id;
 
 	@Column
-	private String skuId;
+	private String sku;
+
+	@Column
+	private int price;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "option_id")
+	private  Option option;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "option_value_id")
+	private  OptionValue optionValue;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "product_id")

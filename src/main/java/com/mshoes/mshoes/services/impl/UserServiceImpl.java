@@ -3,6 +3,7 @@ package com.mshoes.mshoes.services.impl;
 import com.mshoes.mshoes.exception.ResourceNotFoundException;
 import com.mshoes.mshoes.libraries.Utilities;
 import com.mshoes.mshoes.mapper.UserMapper;
+import com.mshoes.mshoes.models.dtos.RequestedSignup;
 import com.mshoes.mshoes.models.dtos.RequestedUser;
 import com.mshoes.mshoes.models.dtos.UserDTO;
 import com.mshoes.mshoes.models.Role;
@@ -33,7 +34,7 @@ public class UserServiceImpl implements UserService {
 	private final Utilities utilities;
 
 	public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, UserMapper userMapper,
-			Utilities utilities) {
+						   Utilities utilities) {
 		// TODO Auto-generated constructor stub
 		this.userRepository = userRepository;
 		this.roleRepository = roleRepository;
@@ -89,36 +90,66 @@ public class UserServiceImpl implements UserService {
 		return userMapper.mapModelToDTO(responseUser);
 	}
 
-
 	@Override
-	public UserDTO updateUser(RequestedUser requestedUser, long userId) {
-		// TODO Auto-generated method stub
+	public UserDTO signupUser(RequestedSignup requestedSignup) {
+		User user = userMapper.mapRequestedSignupToModel(requestedSignup);
 
-		// Get old User with userId from Database
-		User user = userRepository.findById(userId)
-				.orElseThrow(() -> new ResourceNotFoundException("User", "ID", userId));
-		userMapper.updateModel(user, requestedUser);
+		// Get current date and set userCreatedDate and userLastModified
+		user.setCreatedDate(utilities.getCurrentDate());
 		user.setModifiedDate(utilities.getCurrentDate());
 
-		// Save data
-		User responseUser = userRepository.save(user);
+		// Encode password
 
-		return userMapper.mapModelToDTO(responseUser);
+		user.setPassword(passwordEncoder().encode(user.getPassword()));
 
-	}
+		// Set default userStatus
+		user.setStatus(1);
 
-	@Override
-	public void deleteUser(long userId) {
-		// TODO Auto-generated method stub
+		// Set default role_id = 2 (ROLE_USER)
+		long defaultRoleId = 2;
+		Role role = roleRepository.findById(defaultRoleId)
+				.orElseThrow(() -> new ResourceNotFoundException("Role", "ID", defaultRoleId));
+		user.getRoles().add(role);
 
-		// Get old User with userId from Database
-		User user = userRepository.findById(userId)
-				.orElseThrow(() -> new ResourceNotFoundException("User", "ID", userId));
+		// Save user into database
 		try {
-			user.getRoles().clear();
-			userRepository.delete(user);
-		} catch (Exception ex) {
-			System.out.print("Ex: " + ex);
+			User responseUser = userRepository.save(user);
+			return userMapper.mapModelToDTO(responseUser);
+		} catch (Exception e){
+			return null;
 		}
-	}
+		}
+
+
+		@Override
+		public UserDTO updateUser(RequestedUser requestedUser, long userId) {
+			// TODO Auto-generated method stub
+
+			// Get old User with userId from Database
+			User user = userRepository.findById(userId)
+					.orElseThrow(() -> new ResourceNotFoundException("User", "ID", userId));
+			userMapper.updateModel(user, requestedUser);
+			user.setModifiedDate(utilities.getCurrentDate());
+
+			// Save data
+			User responseUser = userRepository.save(user);
+
+			return userMapper.mapModelToDTO(responseUser);
+
+		}
+
+		@Override
+		public void deleteUser(long userId) {
+			// TODO Auto-generated method stub
+
+			// Get old User with userId from Database
+			User user = userRepository.findById(userId)
+					.orElseThrow(() -> new ResourceNotFoundException("User", "ID", userId));
+			try {
+				user.getRoles().clear();
+				userRepository.delete(user);
+			} catch (Exception ex) {
+				System.out.print("Ex: " + ex);
+			}
+		}
 }

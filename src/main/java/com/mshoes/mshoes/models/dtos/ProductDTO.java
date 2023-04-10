@@ -28,7 +28,7 @@ public class ProductDTO {
 
 	private List<ImageDTO> images;
 
-	private List<ProductOption> productOptions;
+	private List<Option> options;
 
 	private List<ProductVariant> productVariants;
 

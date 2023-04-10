@@ -33,8 +33,8 @@ public class VariantValue {
 	private OptionValue optionValue;
 
 	@ManyToOne
-	@JoinColumn(name = "product_option_id", referencedColumnName = "option_id")
-	private ProductOption productOption;
+	@JoinColumn(name = "option_id", referencedColumnName = "id")
+	private Option option;
 
 	@OneToOne(mappedBy = "variantValue", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private OrderItem orderItem;

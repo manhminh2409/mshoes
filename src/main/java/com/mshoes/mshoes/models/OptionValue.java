@@ -1,6 +1,8 @@
 package com.mshoes.mshoes.models;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
@@ -33,6 +35,9 @@ public class OptionValue {
 	private Option option;
 
 	@OneToMany(mappedBy = "optionValue", cascade = CascadeType.ALL)
-	private Set<VariantValue> variantValues = new HashSet<>();
+	private List<ProductVariant> productVariants = new ArrayList<>();
+
+	@OneToMany(mappedBy = "optionValue", cascade = CascadeType.ALL)
+	private List<VariantValue> variantValues = new ArrayList<>();
 
 }

@@ -1,8 +1,10 @@
-package com.mshoes.mshoes.controllers;
+package com.mshoes.mshoes.controllers.admin;
 
+import com.mshoes.mshoes.models.Product;
 import com.mshoes.mshoes.models.dtos.ProductDTO;
 import com.mshoes.mshoes.models.dtos.RequestedProduct;
 import com.mshoes.mshoes.services.ProductService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,20 +32,28 @@ public class ProductController {
 
 	// get All products
 	@GetMapping
-	public List<ProductDTO> getAllProducts() {
-		return productService.getAllProducts();
+	public ResponseEntity<Page<ProductDTO>> findAllProducts(
+			@RequestParam(defaultValue = "0") int pageNumber,
+			@RequestParam(defaultValue = "10") int pageSize,
+			@RequestParam(defaultValue = "id") String sortBy) {
+		Page<ProductDTO> products = productService.getAllProducts(pageNumber, pageSize, sortBy);
+		return new ResponseEntity<>(products, HttpStatus.OK);
 	}
 
 	// get All products
-	@GetMapping("/categoryid/{id}")
-	public List<ProductDTO> getProductsByCategoryId(@PathVariable(name = "id") Long categoryId) {
-		return productService.getProductsByCategoryId(categoryId);
+	@GetMapping("/category/{id}")
+	public ResponseEntity<Page<ProductDTO>> getProductsByCategoryId(
+			@PathVariable(name = "id") Long categoryId,
+			@RequestParam(defaultValue = "0") int pageNumber,
+			@RequestParam(defaultValue = "10") int pageSize,
+			@RequestParam(defaultValue = "id") String sortBy) {
+		Page<ProductDTO> productDTOS = productService.getProductsByCategoryId(categoryId,pageNumber, pageSize, sortBy);
+		return new ResponseEntity<>(productDTOS,HttpStatus.OK);
 	}
 
 	// get Product by ID
 	@GetMapping("/{id}")
 	public ResponseEntity<ProductDTO> getProductById(@PathVariable(name = "id") Long productId) {
-
 		return ResponseEntity.ok(productService.getProductById(productId));
 	}
 

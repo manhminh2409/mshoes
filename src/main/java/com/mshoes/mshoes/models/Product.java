@@ -53,9 +53,8 @@ public class Product {
 	@JoinColumn(name = "product_author_id")
 	private User user;
 
-	@ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-	@JoinTable(name = "product_options", joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "option_id", referencedColumnName = "id"))
-	private Set<Option> options = new HashSet<>();
+	@OneToMany(mappedBy = "product", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+	private List<Option> options = new ArrayList<>();
 
 	@OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<ProductVariant> productVariants = new HashSet<>();

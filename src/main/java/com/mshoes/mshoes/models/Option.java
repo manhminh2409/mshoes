@@ -4,9 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -23,8 +21,12 @@ public class Option {
 	@Column
 	private String name;
 
-	@ManyToMany(mappedBy = "options")
-	private Set<Product> products = new HashSet<>();
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "product_id")
+	private Product product;
+
+	@OneToMany(mappedBy = "option", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private List<ProductVariant> productVariants = new ArrayList<>();
 
 	@OneToMany(mappedBy = "option", cascade = CascadeType.ALL)
 	private List<OptionValue> optionValues = new ArrayList<>();

@@ -1,7 +1,9 @@
 package com.mshoes.mshoes.services;
 
+import com.mshoes.mshoes.models.Product;
 import com.mshoes.mshoes.models.dtos.ProductDTO;
 import com.mshoes.mshoes.models.dtos.RequestedProduct;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -13,7 +15,7 @@ public interface ProductService {
 	 *
 	 * @return
 	 */
-	List<ProductDTO> getAllProducts();
+	Page<ProductDTO> getAllProducts(int pageNumber, int pageSize, String sortBy);
 
 	/**
 	 * Method get all product is enabled (product_status=1) by category in database
@@ -22,7 +24,7 @@ public interface ProductService {
 	 *
 	 * @return
 	 */
-	List<ProductDTO> getProductsByCategoryId(Long categoryId);
+	Page<ProductDTO> getProductsByCategoryId(long categoryId, int pageNumber, int pageSize, String sortBy);
 
 	/**
 	 * Method get a product by product_id in database <br>
@@ -31,7 +33,7 @@ public interface ProductService {
 	 * @param productID
 	 * @return
 	 */
-	ProductDTO getProductById(Long productID);
+	ProductDTO getProductById(long productID);
 
 	/**
 	 * Method create new product<br>

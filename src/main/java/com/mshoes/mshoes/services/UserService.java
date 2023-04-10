@@ -1,5 +1,6 @@
 package com.mshoes.mshoes.services;
 
+import com.mshoes.mshoes.models.dtos.RequestedSignup;
 import com.mshoes.mshoes.models.dtos.RequestedUser;
 import com.mshoes.mshoes.models.dtos.UserDTO;
 
@@ -32,6 +33,15 @@ public interface UserService {
 	 * @return
 	 */
 	UserDTO createUser(RequestedUser requestedUser);
+
+	/**
+	 * Method create new User <br>
+	 * <u><i>Update: 26/02/2023</i></u>
+	 *
+	 * @param requestedSignup
+	 * @return
+	 */
+	UserDTO signupUser(RequestedSignup requestedSignup);
 
 	/**
 	 * Method update user with new information User and userId. <br>

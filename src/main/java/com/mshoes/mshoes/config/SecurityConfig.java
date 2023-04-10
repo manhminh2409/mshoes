@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -28,17 +30,26 @@ public class SecurityConfig {
 	}
 
 	@Bean
-	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests((authz) -> authz.requestMatchers(HttpMethod.GET, "/products/**").permitAll()
-				.requestMatchers(HttpMethod.GET, "/users/**").permitAll()
-				.requestMatchers(HttpMethod.GET, "/categories/**").permitAll().anyRequest().authenticated())
-				.httpBasic(withDefaults()).csrf().disable();
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		http.authorizeHttpRequests((authz) -> authz
+						.requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
+						.requestMatchers(HttpMethod.GET, "/products/**").permitAll()
+						.requestMatchers(HttpMethod.GET, "/users/**").permitAll()
+						.requestMatchers(HttpMethod.GET, "/categories/**").permitAll()
+						.anyRequest().authenticated())
+						.httpBasic(withDefaults())
+						.csrf().disable();
 		return http.build();
 	}
 
 	protected void filterChain(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService((userDetailsService)).passwordEncoder((passwordEncoder()));
 	}
+	@Bean
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+		return authenticationConfiguration.getAuthenticationManager();
+	}
+
 //	@Bean
 //	public UserDetailsManager userDetailsService() {
 //		UserDetails user = User.builder().username("manhminh").password(passwordEncoder().encode("24092001"))

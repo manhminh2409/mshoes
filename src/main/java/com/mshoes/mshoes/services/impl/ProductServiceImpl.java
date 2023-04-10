@@ -13,6 +13,10 @@ import com.mshoes.mshoes.repositories.ImageRepository;
 import com.mshoes.mshoes.repositories.ProductRepository;
 import com.mshoes.mshoes.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -83,14 +87,40 @@ public class ProductServiceImpl implements ProductService {
 		}
 	}
 
+	/**
+	 * Lấy danh sách tất cả sản phẩm, phân trang theo
+	 * @param pageNumber
+	 * @param pageSize
+	 * @return
+	 */
 	@Override
-	public List<ProductDTO> getAllProducts() {
-		List<Product> products = productRepository.findAll();
-		return productMapper.mapModelToDTOs(products);
+	public Page<ProductDTO> getAllProducts(int pageNumber, int pageSize, String sortBy) {
+		Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy).ascending());
+		Page<Product> products = productRepository.findAll(pageable);
+		Page<ProductDTO> productDTOS = products.map(product -> productMapper.mapModelToDTO(product));
+		return productDTOS;
 	}
 
+	/**
+	 * Lấy danh sách sản phẩm theo mã danh mục
+	 * @param categoryId
+	 * @return
+	 *
+	 * */
 	@Override
-	public ProductDTO getProductById(Long productId) {
+	public Page<ProductDTO> getProductsByCategoryId(long categoryId, int pageNumber, int pageSize, String sortBy) {
+		Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy).ascending());
+		Page<Product> products = productRepository.findByCategoryId(categoryId,pageable);
+		Page<ProductDTO> productDTOS = products.map(product -> productMapper.mapModelToDTO(product));
+		return productDTOS;
+	}
+	/**
+	 * Lấy thông tin một sản phẩm theo product_id
+	 * @param productId
+	 * @return
+	 */
+	@Override
+	public ProductDTO getProductById(long productId) {
 		productRepository.incrementVisitedById(productId);
 		Product product = productRepository.findById(productId)
 				.orElseThrow(() -> new ResourceNotFoundException("Product", "id", productId));
@@ -98,13 +128,6 @@ public class ProductServiceImpl implements ProductService {
 		return productMapper.mapModelToDTO(product);
 	}
 
-	@Override
-	public List<ProductDTO> getProductsByCategoryId(Long categoryId) {
-		// TODO Auto-generated method stub
-		List<Product> products = productRepository.findByCategoryId(categoryId);
-
-		return productMapper.mapModelToDTOs(products);
-	}
 
 	@Override
 	public ProductDTO updateProduct(RequestedProduct requestedProduct, long productId) {
