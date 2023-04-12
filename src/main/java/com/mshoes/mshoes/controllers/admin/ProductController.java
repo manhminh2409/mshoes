@@ -1,7 +1,7 @@
 package com.mshoes.mshoes.controllers.admin;
 
 import com.mshoes.mshoes.models.dtos.ProductDTO;
-import com.mshoes.mshoes.models.dtos.RequestedProduct;
+import com.mshoes.mshoes.models.requested.RequestedProduct;
 import com.mshoes.mshoes.services.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;

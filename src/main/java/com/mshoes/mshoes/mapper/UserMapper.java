@@ -1,7 +1,7 @@
 package com.mshoes.mshoes.mapper;
 
-import com.mshoes.mshoes.models.dtos.RequestedSignup;
-import com.mshoes.mshoes.models.dtos.RequestedUser;
+import com.mshoes.mshoes.models.requested.RequestedSignup;
+import com.mshoes.mshoes.models.requested.RequestedUser;
 import com.mshoes.mshoes.models.dtos.UserDTO;
 import com.mshoes.mshoes.models.User;
 import org.mapstruct.BeanMapping;

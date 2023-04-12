@@ -2,7 +2,7 @@ package com.mshoes.mshoes.mapper;
 
 import com.mshoes.mshoes.models.Category;
 import com.mshoes.mshoes.models.dtos.CategoryDTO;
-import com.mshoes.mshoes.models.dtos.RequestedCategory;
+import com.mshoes.mshoes.models.requested.RequestedCategory;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;

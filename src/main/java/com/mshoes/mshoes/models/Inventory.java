@@ -18,6 +18,6 @@ public class Inventory {
 	private int sold;
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "variant_value_id", referencedColumnName = "id")
-	private VariantValue variantValue;
+	@JoinColumn(name = "size_id", referencedColumnName = "id")
+	private Size size;
 }

@@ -1,7 +1,7 @@
 package com.mshoes.mshoes.services;
 
 import com.mshoes.mshoes.models.dtos.ProductDTO;
-import com.mshoes.mshoes.models.dtos.RequestedProduct;
+import com.mshoes.mshoes.models.requested.RequestedProduct;
 import org.springframework.data.domain.Page;
 
 

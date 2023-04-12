@@ -28,8 +28,5 @@ public class ProductDTO {
 
 	private List<ImageDTO> images;
 
-	private List<Option> options;
-
-	private List<ProductVariant> productVariants;
-
+	private List<Color> colors;
 }

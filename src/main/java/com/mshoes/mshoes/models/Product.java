@@ -53,9 +53,6 @@ public class Product {
 	@JoinColumn(name = "product_author_id")
 	private User user;
 
-	@OneToMany(mappedBy = "product", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-	private List<Option> options = new ArrayList<>();
-
-	@OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private Set<ProductVariant> productVariants = new HashSet<>();
+	@OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+	private List<Color> colors = new ArrayList<>();
 }

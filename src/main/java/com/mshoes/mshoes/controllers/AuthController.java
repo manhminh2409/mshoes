@@ -1,7 +1,7 @@
 package com.mshoes.mshoes.controllers;
 
-import com.mshoes.mshoes.models.dtos.RequestedLogin;
-import com.mshoes.mshoes.models.dtos.RequestedSignup;
+import com.mshoes.mshoes.models.requested.RequestedLogin;
+import com.mshoes.mshoes.models.requested.RequestedSignup;
 import com.mshoes.mshoes.models.dtos.UserDTO;
 import com.mshoes.mshoes.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

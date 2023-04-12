@@ -19,6 +19,6 @@ public class OrderItem {
 	private OrderDetail orderDetail;
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "variant_value_id", referencedColumnName = "id")
-	private VariantValue variantValue;
+	@JoinColumn(name = "size_id")
+	private  Size size;
 }

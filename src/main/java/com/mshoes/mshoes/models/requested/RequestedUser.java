@@ -1,4 +1,4 @@
-package com.mshoes.mshoes.models.dtos;
+package com.mshoes.mshoes.models.requested;
 
 import lombok.Data;
 

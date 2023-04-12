@@ -1,6 +1,6 @@
 package com.mshoes.mshoes.controllers.admin;
 
-import com.mshoes.mshoes.models.dtos.RequestedUser;
+import com.mshoes.mshoes.models.requested.RequestedUser;
 import com.mshoes.mshoes.models.dtos.UserDTO;
 import com.mshoes.mshoes.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
