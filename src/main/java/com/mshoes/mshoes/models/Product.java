@@ -7,9 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -32,6 +30,15 @@ public class Product {
 
 	@Column
 	private int visited;
+
+	@Column
+	private String sku;
+
+	@Column
+	private int price;
+
+	@Column
+	private int discountPrice;
 
 	@Column(nullable = false)
 	private String createdDate;

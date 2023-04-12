@@ -22,13 +22,10 @@ public class Size {
     private String value;
 
     @Column
-    private String sku;
+    private int total;
 
     @Column
-    private int price;
-
-    @Column
-    private int discountPrice;
+    private int sold;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "color_id")
@@ -36,7 +33,4 @@ public class Size {
 
     @OneToOne(mappedBy = "size")
     private OrderItem orderItem;
-
-    @OneToOne(mappedBy = "size")
-    private Inventory inventory;
 }
