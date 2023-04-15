@@ -10,9 +10,17 @@ public class RequestedProduct {
 
 	private String description;
 
+	private String sku;
+
+	private int price;
+
+	private int discountPrice;
+
 	private List<String> imageUrls;
 
 	private long categoryId;
 
 	private long userId;
+
+	private List<RequestedColor> colors;
 }

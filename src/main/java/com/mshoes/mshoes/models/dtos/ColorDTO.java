@@ -9,5 +9,5 @@ import java.util.List;
 public class ColorDTO {
     private String value;
 
-    private List<Size> sizes;
+    private List<SizeDTO> sizes;
 }

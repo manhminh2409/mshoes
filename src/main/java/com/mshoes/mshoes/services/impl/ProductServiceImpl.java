@@ -2,15 +2,23 @@ package com.mshoes.mshoes.services.impl;
 
 import com.mshoes.mshoes.exception.ResourceNotFoundException;
 import com.mshoes.mshoes.libraries.Utilities;
+import com.mshoes.mshoes.mapper.ColorMapper;
 import com.mshoes.mshoes.mapper.ImageMapper;
 import com.mshoes.mshoes.mapper.ProductMapper;
+import com.mshoes.mshoes.mapper.SizeMapper;
+import com.mshoes.mshoes.models.Color;
+import com.mshoes.mshoes.models.Size;
 import com.mshoes.mshoes.models.dtos.ProductDTO;
+import com.mshoes.mshoes.models.requested.RequestedColor;
 import com.mshoes.mshoes.models.requested.RequestedImage;
 import com.mshoes.mshoes.models.requested.RequestedProduct;
 import com.mshoes.mshoes.models.Image;
 import com.mshoes.mshoes.models.Product;
+import com.mshoes.mshoes.models.requested.RequestedSize;
+import com.mshoes.mshoes.repositories.ColorRepository;
 import com.mshoes.mshoes.repositories.ImageRepository;
 import com.mshoes.mshoes.repositories.ProductRepository;
+import com.mshoes.mshoes.repositories.SizeRepository;
 import com.mshoes.mshoes.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,6 +28,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -31,46 +40,64 @@ public class ProductServiceImpl implements ProductService {
 	private final ImageRepository imageRepository;
 
 	@Autowired
+	private final ColorRepository colorRepository;
+
+	@Autowired
+	private final SizeRepository sizeRepository;
+
+	@Autowired
 	private final ProductMapper productMapper;
 
 	@Autowired
 	private final ImageMapper imageMapper;
 
 	@Autowired
+	private final ColorMapper colorMapper;
+
+	@Autowired
+	private final SizeMapper sizeMapper;
+	@Autowired
 	private final Utilities utilities;
 
 	public ProductServiceImpl(ProductRepository productRepository, ImageRepository imageRepository,
-			ProductMapper productMapper, ImageMapper imageMapper, Utilities utilities) {
+							  ColorRepository colorRepository, SizeRepository sizeRepository, ProductMapper productMapper, ImageMapper imageMapper, ColorMapper colorMapper, SizeMapper sizeMapper, Utilities utilities) {
 		this.productRepository = productRepository;
 		this.imageRepository = imageRepository;
+		this.colorRepository = colorRepository;
+		this.sizeRepository = sizeRepository;
 		this.productMapper = productMapper;
 		this.imageMapper = imageMapper;
+		this.colorMapper = colorMapper;
+		this.sizeMapper = sizeMapper;
 		this.utilities = utilities;
 	}
 
-	@Override
-	public ProductDTO createProduct(RequestedProduct requestedProduct) {
-		Product product = productMapper.mapRequestedToModel(requestedProduct);
+	private void saveColorsAndSizes(List<RequestedColor> requestedColors, long productId){
+		if (requestedColors != null) {
+			for (RequestedColor requestedColor : requestedColors){
+				requestedColor.setProductId(productId);
+				Color color = colorMapper.mapRequestedToModel(requestedColor);
+				color.setSizes(null);
+				Color newColor = colorRepository.save(color);
+				if(newColor != null){
+					long newColorId = newColor.getId();
+					if (newColorId == 0){
+						break;
+					}else {
+						List<RequestedSize> requestedSizes = requestedColor.getSizes().stream().collect(Collectors.toList());
+						for (RequestedSize requestedSize : requestedSizes){
+							requestedSize.setColorId(newColorId);
+							Size size = sizeMapper.mapRequestedToModel(requestedSize);
+							size.setSold(0);
+							sizeRepository.save(size);
+						}
+					}
 
-		// set current date
-		product.setCreatedDate(utilities.getCurrentDate());
-		product.setModifiedDate(utilities.getCurrentDate());
+				}
 
-		product.setVisited(0);
-		product.setStatus(1);
+			}
+		}
 
-		product.setImages(null);
-		// Save new product to database
-		Product newProduct = productRepository.save(product);
-
-		// Get id of product create recently
-		long productId = newProduct.getId();
-
-		// Save image into table image
-		List<String> imageUrls = requestedProduct.getImageUrls();
-		saveImages(imageUrls, productId);
-
-		return this.getProductById(productId);
 	}
 
 	private void saveImages(List<String> imageUrls, long productId) {
@@ -86,6 +113,38 @@ public class ProductServiceImpl implements ProductService {
 			}
 		}
 	}
+	@Override
+	public ProductDTO createProduct(RequestedProduct requestedProduct) {
+
+		Product product = productMapper.mapRequestedToModel(requestedProduct);
+
+		// set current date
+		product.setCreatedDate(utilities.getCurrentDate());
+		product.setModifiedDate(utilities.getCurrentDate());
+
+		product.setVisited(-1);
+		product.setStatus(1);
+
+		product.setImages(null);
+		// Save new product to database
+		Product newProduct = productRepository.save(product);
+
+		// Get id of product create recently
+		long productId = newProduct.getId();
+
+		List<RequestedColor> requestedColors = requestedProduct.getColors();
+		this.saveColorsAndSizes(requestedColors,productId);
+
+		// Save image into table image
+		List<String> imageUrls = requestedProduct.getImageUrls();
+		saveImages(imageUrls, productId);
+
+
+		return this.getProductById(productId);
+	}
+
+	//Save color and size into database
+
 
 	/**
 	 * Lấy danh sách tất cả sản phẩm, phân trang theo
@@ -114,6 +173,7 @@ public class ProductServiceImpl implements ProductService {
 		Page<ProductDTO> productDTOS = products.map(product -> productMapper.mapModelToDTO(product));
 		return productDTOS;
 	}
+
 	/**
 	 * Lấy thông tin một sản phẩm theo product_id
 	 * @param productId
@@ -124,7 +184,6 @@ public class ProductServiceImpl implements ProductService {
 		productRepository.incrementVisitedById(productId);
 		Product product = productRepository.findById(productId)
 				.orElseThrow(() -> new ResourceNotFoundException("Product", "id", productId));
-
 		return productMapper.mapModelToDTO(product);
 	}
 

@@ -20,4 +20,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 	@Query("UPDATE Product p SET p.visited = p.visited + 1 WHERE p.id = :id")
 	void incrementVisitedById(@Param("id") Long id);
 
+	@Query("select max(p.id) from Product p")
+	Long findNewestId();
 }

@@ -16,6 +16,12 @@ public class ProductDTO {
 
 	private int visited;
 
+	private String sku;
+
+	private int price;
+
+	private int discountPrice;
+
 	private String createdDate;
 
 	private String modifiedDate;
@@ -28,5 +34,5 @@ public class ProductDTO {
 
 	private List<ImageDTO> images;
 
-	private List<Color> colors;
+	private List<ColorDTO> colors;
 }

@@ -24,6 +24,9 @@ public class OrderDetail {
 	@Column
 	private int status;
 
+	@Column
+	private int type;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;

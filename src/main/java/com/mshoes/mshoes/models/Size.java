@@ -27,7 +27,7 @@ public class Size {
     @Column
     private int sold;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "color_id")
     private Color color;
 

@@ -24,10 +24,10 @@ public class Color {
     @Column
     private String value;
 
-    @OneToMany(mappedBy = "color", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "color", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Size> sizes = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
     private Product product;
 }

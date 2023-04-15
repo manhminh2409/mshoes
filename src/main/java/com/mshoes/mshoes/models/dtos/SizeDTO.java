@@ -6,9 +6,8 @@ import lombok.Data;
 public class SizeDTO {
     private String value;
 
-    private String sku;
+    private int total;
 
-    private int price;
+    private int sold;
 
-    private int discountPrice;
 }
