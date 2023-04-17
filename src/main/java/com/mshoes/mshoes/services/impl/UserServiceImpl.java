@@ -90,6 +90,7 @@ public class UserServiceImpl implements UserService {
 		return userMapper.mapModelToDTO(responseUser);
 	}
 
+	@Transactional
 	@Override
 	public UserDTO signupUser(RequestedSignup requestedSignup) {
 		User user = userMapper.mapRequestedSignupToModel(requestedSignup);
@@ -118,38 +119,38 @@ public class UserServiceImpl implements UserService {
 		} catch (Exception e){
 			return null;
 		}
+	}
+
+
+	@Override
+	public UserDTO updateUser(RequestedUser requestedUser, long userId) {
+		// TODO Auto-generated method stub
+
+		// Get old User with userId from Database
+		User user = userRepository.findById(userId)
+				.orElseThrow(() -> new ResourceNotFoundException("User", "ID", userId));
+		userMapper.updateModel(user, requestedUser);
+		user.setModifiedDate(utilities.getCurrentDate());
+
+		// Save data
+		User responseUser = userRepository.save(user);
+
+		return userMapper.mapModelToDTO(responseUser);
+
+	}
+
+	@Override
+	public void deleteUser(long userId) {
+		// TODO Auto-generated method stub
+
+		// Get old User with userId from Database
+		User user = userRepository.findById(userId)
+				.orElseThrow(() -> new ResourceNotFoundException("User", "ID", userId));
+		try {
+			user.getRoles().clear();
+			userRepository.delete(user);
+		} catch (Exception ex) {
+			System.out.print("Ex: " + ex);
 		}
-
-
-		@Override
-		public UserDTO updateUser(RequestedUser requestedUser, long userId) {
-			// TODO Auto-generated method stub
-
-			// Get old User with userId from Database
-			User user = userRepository.findById(userId)
-					.orElseThrow(() -> new ResourceNotFoundException("User", "ID", userId));
-			userMapper.updateModel(user, requestedUser);
-			user.setModifiedDate(utilities.getCurrentDate());
-
-			// Save data
-			User responseUser = userRepository.save(user);
-
-			return userMapper.mapModelToDTO(responseUser);
-
-		}
-
-		@Override
-		public void deleteUser(long userId) {
-			// TODO Auto-generated method stub
-
-			// Get old User with userId from Database
-			User user = userRepository.findById(userId)
-					.orElseThrow(() -> new ResourceNotFoundException("User", "ID", userId));
-			try {
-				user.getRoles().clear();
-				userRepository.delete(user);
-			} catch (Exception ex) {
-				System.out.print("Ex: " + ex);
-			}
-		}
+	}
 }

@@ -9,6 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/products")
@@ -49,6 +52,16 @@ public class ProductController {
 		return new ResponseEntity<>(productDTOS,HttpStatus.OK);
 	}
 
+	//get products by searching
+	@GetMapping("/search")
+	public  ResponseEntity<List<ProductDTO>> searchProducts(@RequestParam String search){
+		Optional<List<ProductDTO>> products = productService.searchProducts(search);
+		if (products.isPresent()) {
+			return ResponseEntity.ok(products.get());
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
 	// get Product by ID
 	@GetMapping("/{id}")
 	public ResponseEntity<ProductDTO> getProductById(@PathVariable(name = "id") Long productId) {

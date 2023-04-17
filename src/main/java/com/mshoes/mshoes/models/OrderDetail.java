@@ -3,7 +3,6 @@ package com.mshoes.mshoes.models;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,10 +15,10 @@ public class OrderDetail {
 	private long id;
 
 	@Column
-	private Date createdDate;
+	private String createdDate;
 
 	@Column
-	private double sumPrice;
+	private double totalPrice;
 
 	@Column
 	private int status;

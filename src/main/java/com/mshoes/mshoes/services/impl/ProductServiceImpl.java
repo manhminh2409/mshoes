@@ -28,6 +28,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -172,6 +173,18 @@ public class ProductServiceImpl implements ProductService {
 		Page<Product> products = productRepository.findByCategoryId(categoryId,pageable);
 		Page<ProductDTO> productDTOS = products.map(product -> productMapper.mapModelToDTO(product));
 		return productDTOS;
+	}
+
+	@Override
+	public Optional<List<ProductDTO>> searchProducts(String search) {
+		List<Product> products = productRepository.searchProducts(search);
+
+		if (!products.isEmpty()) {
+			List<ProductDTO> productDTOS = productMapper.mapModelToDTOs(products);
+			return Optional.of(productDTOS);
+		} else {
+			return Optional.empty();
+		}
 	}
 
 	/**

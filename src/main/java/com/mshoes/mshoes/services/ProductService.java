@@ -4,6 +4,9 @@ import com.mshoes.mshoes.models.dtos.ProductDTO;
 import com.mshoes.mshoes.models.requested.RequestedProduct;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+import java.util.Optional;
+
 
 public interface ProductService {
 
@@ -24,6 +27,14 @@ public interface ProductService {
 	 */
 	Page<ProductDTO> getProductsByCategoryId(long categoryId, int pageNumber, int pageSize, String sortBy);
 
+	/**
+	 * Method get products with String "search"
+	 * <br>
+	 * <u><i>Update: 16/04/2023</i></u>
+	 * @param search
+	 * @return
+	 */
+	Optional<List<ProductDTO>> searchProducts(String search);
 	/**
 	 * Method get a product by product_id in database <br>
 	 * <u><i>Update: 02/03/2023</i></u>
