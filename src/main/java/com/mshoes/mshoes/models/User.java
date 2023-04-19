@@ -1,5 +1,7 @@
 package com.mshoes.mshoes.models;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.mshoes.mshoes.config.LongDeserializer;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,7 +21,8 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	@JsonDeserialize(using = LongDeserializer.class)
+	private Long id;
 
 	@Column(nullable = false)
 	private String username;

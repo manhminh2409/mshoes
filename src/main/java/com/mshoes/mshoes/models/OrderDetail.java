@@ -1,24 +1,30 @@
 package com.mshoes.mshoes.models;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "ORDER_DETAIL")
 public class OrderDetail {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
+
+	@Column
+	private int totalAmount;
+
+	@Column
+	private int totalQuantity;
 
 	@Column
 	private String createdDate;
-
-	@Column
-	private double totalPrice;
 
 	@Column
 	private int status;
@@ -26,14 +32,14 @@ public class OrderDetail {
 	@Column
 	private int type;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "orderDetail", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private List<OrderItem> orderItems = new ArrayList<>();
+
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	@OneToMany(mappedBy = "orderDetail", cascade = CascadeType.ALL)
-	private Set<OrderItem> orderItems = new HashSet<>();
-
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "payment_id")
 	private Payment payment;
 }

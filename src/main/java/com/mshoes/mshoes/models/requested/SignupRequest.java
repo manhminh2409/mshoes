@@ -3,7 +3,7 @@ package com.mshoes.mshoes.models.requested;
 import lombok.Data;
 
 @Data
-public class RequestedSignup {
+public class SignupRequest {
     private String username;
 
     private String password;

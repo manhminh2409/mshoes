@@ -1,17 +1,25 @@
 package com.mshoes.mshoes.controllers.admin;
 
-import com.mshoes.mshoes.models.dtos.ProductDTO;
-import com.mshoes.mshoes.models.requested.RequestedProduct;
-import com.mshoes.mshoes.services.ProductService;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.Optional;
-
+import com.mshoes.mshoes.models.requested.ProductRequest;
+import com.mshoes.mshoes.models.response.ProductResponse;
+import com.mshoes.mshoes.services.ProductService;
 
 @RestController
 @RequestMapping("/products")
@@ -26,54 +34,48 @@ public class ProductController {
 	// Create product POST
 	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/create")
-	public ResponseEntity<ProductDTO> createProduct(@RequestBody RequestedProduct requestedProduct) {
+	public ResponseEntity<ProductResponse> createProduct(@RequestBody ProductRequest productRequest) {
 
-		return new ResponseEntity<>(productService.createProduct(requestedProduct), HttpStatus.CREATED);
+		return new ResponseEntity<>(productService.createProduct(productRequest), HttpStatus.CREATED);
 	}
 
 	// get All products
 	@GetMapping
-	public ResponseEntity<Page<ProductDTO>> findAllProducts(
-			@RequestParam(defaultValue = "0") int pageNumber,
-			@RequestParam(defaultValue = "10") int pageSize,
-			@RequestParam(defaultValue = "id") String sortBy) {
-		Page<ProductDTO> products = productService.getAllProducts(pageNumber, pageSize, sortBy);
+	public ResponseEntity<Page<ProductResponse>> findAllProducts(@RequestParam(defaultValue = "0") int pageNumber,
+			@RequestParam(defaultValue = "10") int pageSize, @RequestParam(defaultValue = "id") String sortBy) {
+		Page<ProductResponse> products = productService.getAllProducts(pageNumber, pageSize, sortBy);
 		return new ResponseEntity<>(products, HttpStatus.OK);
 	}
 
 	// get All products
 	@GetMapping("/category/{id}")
-	public ResponseEntity<Page<ProductDTO>> getProductsByCategoryId(
-			@PathVariable(name = "id") Long categoryId,
-			@RequestParam(defaultValue = "0") int pageNumber,
-			@RequestParam(defaultValue = "10") int pageSize,
+	public ResponseEntity<Page<ProductResponse>> getProductsByCategoryId(@PathVariable(name = "id") Long categoryId,
+			@RequestParam(defaultValue = "0") int pageNumber, @RequestParam(defaultValue = "10") int pageSize,
 			@RequestParam(defaultValue = "id") String sortBy) {
-		Page<ProductDTO> productDTOS = productService.getProductsByCategoryId(categoryId,pageNumber, pageSize, sortBy);
-		return new ResponseEntity<>(productDTOS,HttpStatus.OK);
+		Page<ProductResponse> productResponses = productService.getProductsByCategoryId(categoryId, pageNumber,
+				pageSize, sortBy);
+		return new ResponseEntity<>(productResponses, HttpStatus.OK);
 	}
 
-	//get products by searching
+	// get products by searching
 	@GetMapping("/search")
-	public  ResponseEntity<List<ProductDTO>> searchProducts(@RequestParam String search){
-		Optional<List<ProductDTO>> products = productService.searchProducts(search);
-		if (products.isPresent()) {
-			return ResponseEntity.ok(products.get());
-		} else {
-			return ResponseEntity.notFound().build();
-		}
+	public ResponseEntity<List<ProductResponse>> searchProducts(@RequestParam String search) {
+		Optional<List<ProductResponse>> productResponses = productService.searchProducts(search);
+		return productResponses.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
 	}
+
 	// get Product by ID
 	@GetMapping("/{id}")
-	public ResponseEntity<ProductDTO> getProductById(@PathVariable(name = "id") Long productId) {
+	public ResponseEntity<ProductResponse> getProductById(@PathVariable(name = "id") Long productId) {
 		return ResponseEntity.ok(productService.getProductById(productId));
 	}
 
 	// Update Product by ID
 	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/update/{id}")
-	public ResponseEntity<ProductDTO> updateProduct(@RequestBody RequestedProduct requestedProduct,
+	public ResponseEntity<ProductResponse> updateProduct(@RequestBody ProductRequest productRequest,
 			@PathVariable(name = "id") long productId) {
-		ProductDTO productResponse = productService.updateProduct(requestedProduct, productId);
+		ProductResponse productResponse = productService.updateProduct(productRequest, productId);
 
 		return new ResponseEntity<>(productResponse, HttpStatus.OK);
 	}

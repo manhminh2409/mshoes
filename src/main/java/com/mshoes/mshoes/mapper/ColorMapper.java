@@ -2,13 +2,14 @@ package com.mshoes.mshoes.mapper;
 
 import com.mshoes.mshoes.models.Color;
 import com.mshoes.mshoes.models.dtos.ColorDTO;
-import com.mshoes.mshoes.models.requested.RequestedColor;
+import com.mshoes.mshoes.models.requested.ColorRequest;
+import com.mshoes.mshoes.models.response.ColorResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import java.util.List;
 
-@Mapper
+@Mapper(uses = ProductMapper.class)
 public interface ColorMapper {
     // mapper one model to dto
     ColorDTO mapModelToDTO(Color Color);
@@ -22,8 +23,11 @@ public interface ColorMapper {
     // mapper list dto to model
     List<Color> mapDTOToModels(List<ColorDTO> ColorDTOS);
 
+    @Mapping(target = "sizeResponses", source = "sizes")
+    ColorResponse mapModelToResponse(Color color);
+
     @Mapping(target = "product.id", source = "productId")
-    Color mapRequestedToModel(RequestedColor requestedColor);
+    Color mapRequestedToModel(ColorRequest colorRequest);
 
 //    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 //    void updateModel(@MappingTarget Color Color, RequestedColor requestedColor);

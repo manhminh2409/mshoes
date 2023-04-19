@@ -18,7 +18,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
@@ -30,7 +29,6 @@ public class SecurityConfig {
 
 	@Autowired
 	private JwtAuthenticationEntryPoint authenticationEntryPoint;
-
 
 	@Bean
 	public JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
@@ -55,6 +53,8 @@ public class SecurityConfig {
 						.requestMatchers(HttpMethod.GET, "/products/**").permitAll()
 						.requestMatchers(HttpMethod.GET, "/users/**").permitAll()
 						.requestMatchers(HttpMethod.GET, "/categories/**").permitAll()
+						.requestMatchers("/cart/**").permitAll()
+						.requestMatchers("/error/**").permitAll()
 						.anyRequest().authenticated();
 		http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 		return http.build();

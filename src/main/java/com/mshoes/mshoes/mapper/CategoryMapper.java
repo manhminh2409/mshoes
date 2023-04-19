@@ -1,14 +1,15 @@
 package com.mshoes.mshoes.mapper;
 
-import com.mshoes.mshoes.models.Category;
-import com.mshoes.mshoes.models.dtos.CategoryDTO;
-import com.mshoes.mshoes.models.requested.RequestedCategory;
+import java.util.List;
+
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
-import java.util.List;
+import com.mshoes.mshoes.models.Category;
+import com.mshoes.mshoes.models.dtos.CategoryDTO;
+import com.mshoes.mshoes.models.requested.CategoryRequest;
 
 @Mapper(uses = ProductMapper.class)
 public interface CategoryMapper {
@@ -26,5 +27,5 @@ public interface CategoryMapper {
 	List<Category> mapDTOToModels(List<CategoryDTO> categoryDTOS);
 
 	@BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-	void updateModel(@MappingTarget Category category, RequestedCategory requestedCategory);
+	void updateModel(@MappingTarget Category category, CategoryRequest categoryRequest);
 }

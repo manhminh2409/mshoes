@@ -5,10 +5,10 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class RequestedColor {
+public class ColorRequest {
     private String value;
 
-    private List<RequestedSize> sizes;
+    private List<SizeRequest> sizes;
 
-    private long productId;
+    private Long productId;
 }

@@ -3,8 +3,8 @@ package com.mshoes.mshoes.services.impl;
 import com.mshoes.mshoes.exception.ResourceNotFoundException;
 import com.mshoes.mshoes.libraries.Utilities;
 import com.mshoes.mshoes.mapper.UserMapper;
-import com.mshoes.mshoes.models.requested.RequestedSignup;
-import com.mshoes.mshoes.models.requested.RequestedUser;
+import com.mshoes.mshoes.models.requested.SignupRequest;
+import com.mshoes.mshoes.models.requested.UserRequest;
 import com.mshoes.mshoes.models.dtos.UserDTO;
 import com.mshoes.mshoes.models.Role;
 import com.mshoes.mshoes.models.User;
@@ -63,9 +63,9 @@ public class UserServiceImpl implements UserService {
 
 	@Transactional
 	@Override
-	public UserDTO createUser(RequestedUser requestedUser) {
+	public UserDTO createUser(UserRequest userRequest) {
 		// TODO Auto-generated method stub
-		User user = userMapper.mapRequestedToModel(requestedUser);
+		User user = userMapper.mapRequestedToModel(userRequest);
 
 		// Get current date and set userCreatedDate and userLastModified
 		user.setCreatedDate(utilities.getCurrentDate());
@@ -92,8 +92,8 @@ public class UserServiceImpl implements UserService {
 
 	@Transactional
 	@Override
-	public UserDTO signupUser(RequestedSignup requestedSignup) {
-		User user = userMapper.mapRequestedSignupToModel(requestedSignup);
+	public UserDTO signupUser(SignupRequest signupRequest) {
+		User user = userMapper.mapRequestedSignupToModel(signupRequest);
 
 		// Get current date and set userCreatedDate and userLastModified
 		user.setCreatedDate(utilities.getCurrentDate());
@@ -123,13 +123,13 @@ public class UserServiceImpl implements UserService {
 
 
 	@Override
-	public UserDTO updateUser(RequestedUser requestedUser, long userId) {
+	public UserDTO updateUser(UserRequest userRequest, long userId) {
 		// TODO Auto-generated method stub
 
 		// Get old User with userId from Database
 		User user = userRepository.findById(userId)
 				.orElseThrow(() -> new ResourceNotFoundException("User", "ID", userId));
-		userMapper.updateModel(user, requestedUser);
+		userMapper.updateModel(user, userRequest);
 		user.setModifiedDate(utilities.getCurrentDate());
 
 		// Save data

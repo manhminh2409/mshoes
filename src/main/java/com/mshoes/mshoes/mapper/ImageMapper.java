@@ -1,7 +1,7 @@
 package com.mshoes.mshoes.mapper;
 
 import com.mshoes.mshoes.models.dtos.ImageDTO;
-import com.mshoes.mshoes.models.requested.RequestedImage;
+import com.mshoes.mshoes.models.requested.ImageRequest;
 import com.mshoes.mshoes.models.Image;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -26,5 +26,5 @@ public interface ImageMapper {
 	List<Image> mapDTOToModels(List<ImageDTO> imageDTOS);
 
 	@Mapping(target = "product.id", source = "productId")
-	Image mapRequestedToModel(RequestedImage requestedImage);
+	Image mapRequestedToModel(ImageRequest imageRequest);
 }

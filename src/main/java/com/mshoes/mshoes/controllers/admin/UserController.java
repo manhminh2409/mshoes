@@ -1,6 +1,6 @@
 package com.mshoes.mshoes.controllers.admin;
 
-import com.mshoes.mshoes.models.requested.RequestedUser;
+import com.mshoes.mshoes.models.requested.UserRequest;
 import com.mshoes.mshoes.models.dtos.UserDTO;
 import com.mshoes.mshoes.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,15 +35,15 @@ public class UserController {
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/create")
-	public ResponseEntity<UserDTO> createUser(@RequestBody RequestedUser requestedUser) {
-		return new ResponseEntity<>(userService.createUser(requestedUser), HttpStatus.CREATED);
+	public ResponseEntity<UserDTO> createUser(@RequestBody UserRequest userRequest) {
+		return new ResponseEntity<>(userService.createUser(userRequest), HttpStatus.CREATED);
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/update/{id}")
 	public ResponseEntity<UserDTO> updateUser(@PathVariable(name = "id") long userId,
-			@RequestBody RequestedUser requestedUser) {
-		UserDTO responseUser = userService.updateUser(requestedUser, userId);
+			@RequestBody UserRequest userRequest) {
+		UserDTO responseUser = userService.updateUser(userRequest, userId);
 
 		return new ResponseEntity<>(responseUser, HttpStatus.OK);
 	}

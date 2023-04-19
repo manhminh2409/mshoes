@@ -1,7 +1,7 @@
 package com.mshoes.mshoes.services;
 
-import com.mshoes.mshoes.models.requested.RequestedSignup;
-import com.mshoes.mshoes.models.requested.RequestedUser;
+import com.mshoes.mshoes.models.requested.SignupRequest;
+import com.mshoes.mshoes.models.requested.UserRequest;
 import com.mshoes.mshoes.models.dtos.UserDTO;
 
 import java.util.List;
@@ -29,29 +29,29 @@ public interface UserService {
 	 * Method create new User <br>
 	 * <u><i>Update: 26/02/2023</i></u>
 	 *
-	 * @param requestedUser
+	 * @param userRequest
 	 * @return
 	 */
-	UserDTO createUser(RequestedUser requestedUser);
+	UserDTO createUser(UserRequest userRequest);
 
 	/**
 	 * Method create new User <br>
 	 * <u><i>Update: 26/02/2023</i></u>
 	 *
-	 * @param requestedSignup
+	 * @param signupRequest
 	 * @return
 	 */
-	UserDTO signupUser(RequestedSignup requestedSignup);
+	UserDTO signupUser(SignupRequest signupRequest);
 
 	/**
 	 * Method update user with new information User and userId. <br>
 	 * <u><i>Update: 26/02/2023</i></u>
 	 *
-	 * @param requestedUser
+	 * @param userRequest
 	 * @param userId
 	 * @return
 	 */
-	UserDTO updateUser(RequestedUser requestedUser, long userId);
+	UserDTO updateUser(UserRequest userRequest, long userId);
 
 	/**
 	 * Method delete user with userId. <br>

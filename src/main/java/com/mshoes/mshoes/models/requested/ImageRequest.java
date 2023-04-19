@@ -3,8 +3,8 @@ package com.mshoes.mshoes.models.requested;
 import lombok.Data;
 
 @Data
-public class RequestedImage {
+public class ImageRequest {
 	private String url;
 
-	private long productId;
+	private Long productId;
 }

@@ -1,7 +1,7 @@
 package com.mshoes.mshoes.mapper;
 
-import com.mshoes.mshoes.models.requested.RequestedSignup;
-import com.mshoes.mshoes.models.requested.RequestedUser;
+import com.mshoes.mshoes.models.requested.SignupRequest;
+import com.mshoes.mshoes.models.requested.UserRequest;
 import com.mshoes.mshoes.models.dtos.UserDTO;
 import com.mshoes.mshoes.models.User;
 import org.mapstruct.BeanMapping;
@@ -25,10 +25,10 @@ public interface UserMapper {
 	// mapper list dto to model
 	List<User> mapDTOToModels(List<UserDTO> userDTOS);
 
-	User mapRequestedToModel(RequestedUser requestedUser);
+	User mapRequestedToModel(UserRequest userRequest);
 
-	User mapRequestedSignupToModel(RequestedSignup requestedSignup);
+	User mapRequestedSignupToModel(SignupRequest signupRequest);
 	@BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-	void updateModel(@MappingTarget User user, RequestedUser requestedUser);
+	void updateModel(@MappingTarget User user, UserRequest userRequest);
 
 }

@@ -1,9 +1,15 @@
 package com.mshoes.mshoes.mapper;
 
+import com.mshoes.mshoes.models.Color;
+import com.mshoes.mshoes.models.Size;
 import com.mshoes.mshoes.models.dtos.ProductDTO;
-import com.mshoes.mshoes.models.requested.RequestedProduct;
+import com.mshoes.mshoes.models.requested.ProductRequest;
 import com.mshoes.mshoes.models.Image;
 import com.mshoes.mshoes.models.Product;
+import com.mshoes.mshoes.models.response.ColorResponse;
+import com.mshoes.mshoes.models.response.ProductItemResponse;
+import com.mshoes.mshoes.models.response.ProductResponse;
+import com.mshoes.mshoes.models.response.SizeResponse;
 import org.mapstruct.*;
 
 import java.util.ArrayList;
@@ -28,10 +34,23 @@ public interface ProductMapper {
 	// mapper list dto to model
 	List<Product> mapDTOToModels(List<ProductDTO> productDTOS);
 
+	//map danh sách ProductResponse với danh sách Product
+	@Mapping(target = "colorResponses", source = "colors")
+	ProductResponse toProductResponse(Product product);
+	@Mapping(target = "sizeResponses", source = "sizes")
+	ColorResponse mapColorToColorResponse(Color color);
+	SizeResponse mapSizeToSizeResponse(Size size);
+
+
+	List<ProductResponse> mapModelsToResponses(List<Product> products);
+
+
+	//map product to productItemResponse
+	ProductItemResponse mapModelToProductItemResponse(Product product);
 	@Mapping(target = "category.id", source = "categoryId")
 	@Mapping(target = "user.id", source = "userId")
 	@Mapping(target = "images", source = "imageUrls", qualifiedByName = "mapUrlsToImages")
-	Product mapRequestedToModel(RequestedProduct requestedProduct);
+	Product mapRequestedToModel(ProductRequest productRequest);
 
 	@Named("mapUrlsToImages")
 	default List<Image> mapUrlsToImages(List<String> imageUrls) {
@@ -44,5 +63,5 @@ public interface ProductMapper {
 	@BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 	@Mapping(target = "category.id", source = "categoryId")
 	@Mapping(target = "user.id", source = "userId")
-	void updateModel(@MappingTarget Product product, RequestedProduct requestedProduct);
+	void updateModel(@MappingTarget Product product, ProductRequest productRequest);
 }

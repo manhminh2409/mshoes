@@ -9,16 +9,17 @@ import lombok.Data;
 public class OrderItem {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 
 	@Column
-	private int quality;
+	private int quantity;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "detail_id")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "order_id")
 	private OrderDetail orderDetail;
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "size_id")
 	private  Size size;
+
 }

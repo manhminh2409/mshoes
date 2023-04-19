@@ -19,7 +19,7 @@ public class Category {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 
 	@Column
 	private String title;
@@ -36,6 +36,6 @@ public class Category {
 	@Column
 	private int status;
 
-	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "category",cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Product> products;
 }

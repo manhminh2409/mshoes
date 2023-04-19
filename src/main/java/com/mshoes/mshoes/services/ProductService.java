@@ -1,22 +1,21 @@
 package com.mshoes.mshoes.services;
 
-import com.mshoes.mshoes.models.dtos.ProductDTO;
-import com.mshoes.mshoes.models.requested.RequestedProduct;
-import org.springframework.data.domain.Page;
-
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+
+import com.mshoes.mshoes.models.requested.ProductRequest;
+import com.mshoes.mshoes.models.response.ProductResponse;
 
 public interface ProductService {
-
 	/**
 	 * Method get all product is enable(product_status=1) in database <br>
 	 * <u><i>Update: 02/03/2023</i></u>
 	 *
 	 * @return ProductDTO
 	 */
-	Page<ProductDTO> getAllProducts(int pageNumber, int pageSize, String sortBy);
+	Page<ProductResponse> getAllProducts(int pageNumber, int pageSize, String sortBy);
 
 	/**
 	 * Method get all product is enabled (product_status=1) by category in database
@@ -25,16 +24,17 @@ public interface ProductService {
 	 *
 	 * @return ProductDTO
 	 */
-	Page<ProductDTO> getProductsByCategoryId(long categoryId, int pageNumber, int pageSize, String sortBy);
+	Page<ProductResponse> getProductsByCategoryId(long categoryId, int pageNumber, int pageSize, String sortBy);
 
 	/**
-	 * Method get products with String "search"
-	 * <br>
+	 * Method get products with String "search" <br>
 	 * <u><i>Update: 16/04/2023</i></u>
+	 * 
 	 * @param search
 	 * @return
 	 */
-	Optional<List<ProductDTO>> searchProducts(String search);
+	Optional<List<ProductResponse>> searchProducts(String search);
+
 	/**
 	 * Method get a product by product_id in database <br>
 	 * <u><i>Update: 02/03/2023</i></u>
@@ -42,26 +42,26 @@ public interface ProductService {
 	 * @param productID
 	 * @return
 	 */
-	ProductDTO getProductById(long productID);
+	ProductResponse getProductById(long productID);
 
 	/**
 	 * Method create new product<br>
 	 * <u><i>Update: 02/03/2023</i></u>
 	 *
-	 * @param requestedProduct
+	 * @param productRequest
 	 * @return
 	 */
-	ProductDTO createProduct(RequestedProduct requestedProduct);
+	ProductResponse createProduct(ProductRequest productRequest);
 
 	/**
 	 * Method update detail a product with new infomation and product_id<br>
 	 * <u><i>Update: 02/03/2023</i></u>
 	 *
-	 * @param requestedProduct
+	 * @param productRequest
 	 * @param productId
 	 * @return
 	 */
-	ProductDTO updateProduct(RequestedProduct requestedProduct, long productId);
+	ProductResponse updateProduct(ProductRequest productRequest, long productId);
 
 	/**
 	 * Method delete (change product_status to value 0) change enable product to
